@@ -26,9 +26,9 @@ const Home = () => {
     // Dark mode toggle
     useEffect(() => {
         if (isDarkMode) {
-            document.body.classList.remove('light-mode');
-        } else {
             document.body.classList.add('light-mode');
+        } else {
+            document.body.classList.remove('light-mode');
         }
     }, [isDarkMode]);
 
