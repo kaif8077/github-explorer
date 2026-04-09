@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import RepoCard from './RepoCard';
 
-const RepoList = ({ repos, isLoading, error, onRetry, lastElementRef, hasMore, loadingMore }) => {
+const RepoList = ({ repos, isLoading, error, onRetry }) => {
   const [sortBy, setSortBy] = useState('updated');
   const [filterLanguage, setFilterLanguage] = useState('all');
 
@@ -26,7 +26,7 @@ const RepoList = ({ repos, isLoading, error, onRetry, lastElementRef, hasMore, l
     return filtered;
   }, [repos, sortBy, filterLanguage]);
 
-  if (isLoading && repos.length === 0) {
+  if (isLoading) {
     return (
       <div style={{
         display: 'flex',
@@ -43,7 +43,7 @@ const RepoList = ({ repos, isLoading, error, onRetry, lastElementRef, hasMore, l
     );
   }
 
-  if (error && repos.length === 0) {
+  if (error) {
     return (
       <div style={{
         textAlign: 'center',
@@ -91,6 +91,7 @@ const RepoList = ({ repos, isLoading, error, onRetry, lastElementRef, hasMore, l
 
   return (
     <div>
+      {/* Filters Section */}
       <div style={{
         background: 'var(--bg-secondary)',
         borderRadius: '12px',
@@ -142,45 +143,17 @@ const RepoList = ({ repos, isLoading, error, onRetry, lastElementRef, hasMore, l
           </select>
 
           <div style={{ marginLeft: 'auto', color: 'var(--text-secondary)', fontSize: '14px' }}>
-            📊 Showing {processedRepos.length} of {repos.length} repos
+            📊 Showing {processedRepos.length} repos
           </div>
         </div>
       </div>
 
+      {/* Repositories List */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {processedRepos.map((repo, index) => (
-          <div
-            key={repo.id}
-            ref={index === processedRepos.length - 1 ? lastElementRef : null}
-          >
-            <RepoCard repo={repo} />
-          </div>
+        {processedRepos.map(repo => (
+          <RepoCard key={repo.id} repo={repo} />
         ))}
       </div>
-
-      {loadingMore && (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px',
-          gap: '10px'
-        }}>
-          <div className="loader-small" />
-          <span>Loading more repositories...</span>
-        </div>
-      )}
-
-      {!hasMore && repos.length > 0 && (
-        <div style={{
-          textAlign: 'center',
-          padding: '20px',
-          color: 'var(--text-secondary)',
-          fontSize: '14px'
-        }}>
-          🎉 You've reached the end! No more repositories to load.
-        </div>
-      )}
     </div>
   );
 };

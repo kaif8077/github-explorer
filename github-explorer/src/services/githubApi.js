@@ -19,7 +19,7 @@ export const searchUsers = async (query) => {
   return data;
 };
 
-export const getUserRepos = async (username, page = 1, perPage = 20) => {
+export const getUserRepos = async (username, page = 1, perPage = 10) => {
   const response = await fetch(
     `${API_URL}/users/${username}/repos?per_page=${perPage}&page=${page}&sort=updated`
   );
@@ -28,7 +28,9 @@ export const getUserRepos = async (username, page = 1, perPage = 20) => {
     throw new Error(`Failed to fetch repositories for ${username}`);
   }
   
-  const data = await response.json();
+  const repos = await response.json();
+  
+  // Get total count from Link header
   const linkHeader = response.headers.get('Link');
   let hasMore = false;
   
@@ -36,7 +38,7 @@ export const getUserRepos = async (username, page = 1, perPage = 20) => {
     hasMore = linkHeader.includes('rel="next"');
   }
   
-  return { repos: data, hasMore };
+  return { repos, hasMore };
 };
 
 export const getUserDetails = async (username) => {
