@@ -231,7 +231,7 @@ const Home = () => {
                                         📚 {selectedUser.login}'s Repositories
                                     </h2>
                                     <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                                        Total: {repos.length} public repositories {hasMore && '(loading more...)'}
+                                        Total: {repos.length} public repositories 
                                     </p>
                                 </div>
 
