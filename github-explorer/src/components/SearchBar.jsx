@@ -17,7 +17,7 @@ const SearchBar = ({ value, onChange, isLoading }) => {
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Search GitHub users... (e.g., john, react, google)"
+          placeholder="Search GitHub users..."
           style={{
             width: '100%',
             padding: '14px 20px 14px 45px',
