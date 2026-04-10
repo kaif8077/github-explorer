@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import RepoCard from './RepoCard';
 
-const RepoList = ({ repos, isLoading, error, onRetry }) => {
+const RepoList = ({ repos, isLoading, error, onRetry, onBookmarkChange }) => {
   const [sortBy, setSortBy] = useState('updated');
   const [filterLanguage, setFilterLanguage] = useState('all');
 
@@ -91,7 +91,6 @@ const RepoList = ({ repos, isLoading, error, onRetry }) => {
 
   return (
     <div>
-      {/* Filters Section */}
       <div style={{
         background: 'var(--bg-secondary)',
         borderRadius: '12px',
@@ -148,10 +147,13 @@ const RepoList = ({ repos, isLoading, error, onRetry }) => {
         </div>
       </div>
 
-      {/* Repositories List */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {processedRepos.map(repo => (
-          <RepoCard key={repo.id} repo={repo} />
+          <RepoCard 
+            key={repo.id} 
+            repo={repo} 
+            onBookmarkChange={onBookmarkChange}
+          />
         ))}
       </div>
     </div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const RepoCard = ({ repo }) => {
+const RepoCard = ({ repo, onBookmarkChange }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  // Check if repo is bookmarked on load
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarkedRepos') || '[]');
     setIsBookmarked(bookmarks.some(b => b.id === repo.id));
@@ -13,22 +14,37 @@ const RepoCard = ({ repo }) => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarkedRepos') || '[]');
     
     if (isBookmarked) {
+      // Remove from bookmarks
       const newBookmarks = bookmarks.filter(b => b.id !== repo.id);
       localStorage.setItem('bookmarkedRepos', JSON.stringify(newBookmarks));
       setIsBookmarked(false);
+      
+      // IMPORTANT: Notify parent immediately
+      if (onBookmarkChange) {
+        onBookmarkChange();
+      }
     } else {
-      const newBookmarks = [...bookmarks, { 
+      // Add to bookmarks
+      const newBookmark = { 
         id: repo.id, 
         name: repo.name, 
         fullName: repo.full_name,
         description: repo.description,
         stars: repo.stargazers_count,
         forks: repo.forks_count,
+        language: repo.language,
         url: repo.html_url,
+        owner: repo.owner?.login,
         bookmarkedAt: new Date().toISOString()
-      }];
+      };
+      const newBookmarks = [...bookmarks, newBookmark];
       localStorage.setItem('bookmarkedRepos', JSON.stringify(newBookmarks));
       setIsBookmarked(true);
+      
+      // IMPORTANT: Notify parent immediately
+      if (onBookmarkChange) {
+        onBookmarkChange();
+      }
     }
   };
 
@@ -42,11 +58,6 @@ const RepoCard = ({ repo }) => {
     'C++': '#f34b7d',
     HTML: '#e34c26',
     CSS: '#563d7c',
-    Ruby: '#701516',
-    PHP: '#4F5D95',
-    Swift: '#ffac45',
-    Kotlin: '#A97BFF',
-    Vue: '#41b883'
   };
 
   const languageColor = languageColors[repo.language] || '#8b949e';
@@ -135,7 +146,6 @@ const RepoCard = ({ repo }) => {
         <span>⭐ {repo.stargazers_count.toLocaleString()}</span>
         <span>🍴 {repo.forks_count.toLocaleString()}</span>
         <span>📅 Updated: {new Date(repo.updated_at).toLocaleDateString()}</span>
-        {repo.license && <span>📄 {repo.license.spdx_id}</span>}
       </div>
     </div>
   );
