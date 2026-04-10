@@ -192,7 +192,7 @@ const Home = () => {
                                 backgroundClip: 'text',
                                 marginBottom: '5px'
                             }}>
-                                🚀 GitHub Explorer
+                                🐙 GitHub Explorer
                             </h1>
                             <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
                                 Search GitHub users and explore their repositories
@@ -211,7 +211,7 @@ const Home = () => {
                                     padding: '8px 16px',
                                     background: showBookmarks ? 'var(--accent-blue)' : 'var(--bg-card)',
                                     border: `1px solid var(--border-color)`,
-                                    borderRadius: '20px',
+                                    borderRadius: '10px',
                                     color: showBookmarks ? 'white' : 'var(--text-primary)',
                                     cursor: 'pointer',
                                     fontSize: '14px',
@@ -226,9 +226,9 @@ const Home = () => {
                                 <span style={{
                                     background: showBookmarks ? 'white' : 'var(--accent-blue)',
                                     color: showBookmarks ? 'var(--accent-blue)' : 'white',
-                                    padding: '2px 8px',
-                                    borderRadius: '12px',
-                                    fontSize: '12px',
+                                    padding: '1px 5px',
+                                    borderRadius: '10px',
+                                    fontSize: '15px',
                                     fontWeight: 'bold'
                                 }}>
                                     {bookmarkedCount}
@@ -238,13 +238,13 @@ const Home = () => {
                             <button
                                 onClick={() => setIsDarkMode(!isDarkMode)}
                                 style={{
-                                    padding: '10px 20px',
+                                    padding: '8px 16px',
                                     background: 'var(--bg-card)',
                                     border: `1px solid var(--border-color)`,
                                     borderRadius: '10px',
                                     color: 'var(--text-primary)',
                                     cursor: 'pointer',
-                                    fontSize: '20px',
+                                    fontSize: '15px',
                                     transition: 'all 0.2s ease'
                                 }}
                             >
